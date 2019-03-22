@@ -1,7 +1,7 @@
 import os
 import re
 
-from dir import helpers
+from path import helpers
 
 
 NUMBERS_REGEXP = r'[0-9]*'
