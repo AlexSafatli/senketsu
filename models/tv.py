@@ -4,7 +4,7 @@ from models.record import MediaCenterRecord
 
 class TVShow(MediaCenterRecord):
     def __init__(self, tvpath):
-        super().__init__(self, tvpath, path.structure.MEDIA_TYPE_TV)
+        super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
 
 
 def get_tv_shows(tv_path):
