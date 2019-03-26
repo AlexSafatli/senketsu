@@ -1,6 +1,5 @@
 import path.structure
-
-from models import tv, movie, anime
+import models
 
 
 class MediaLibrary(object):
@@ -23,17 +22,17 @@ class MediaLibrary(object):
     def _get_tv_shows(self):
         for p in self._library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_TV:
-                self.tv_shows.extend(tv.get_tv_shows(p))
+                self.tv_shows.extend(models.tv.get_tv_shows(p))
 
     def _get_movies(self):
         for p in self._library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_MOVIES:
-                self.movies.extend(movie.get_movies(p))
+                self.movies.extend(models.movie.get_movies(p))
 
     def _get_anime(self):
         for p in self._library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_ANIME:
-                self.anime.extend(anime.get_anime_shows(p))
+                self.anime.extend(models.anime.get_anime_shows(p))
 
     def get_media_for_media_type(self, media_type):
         if media_type == path.structure.MEDIA_TYPE_TV:
