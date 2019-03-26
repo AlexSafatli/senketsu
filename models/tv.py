@@ -2,7 +2,7 @@ import os
 
 import path.structure
 from path import helpers
-from models.base import MediaCenterRecord
+from .base import MediaCenterRecord
 
 LABEL_TV_SEASON = 'Season'
 
