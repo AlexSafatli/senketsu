@@ -14,4 +14,5 @@ def get_file_name_parts(path):
 
 
 def get_file_type(path):
-    return filetype.guess(path)
+    if os.path.isfile(path):
+        return filetype.guess(path)
