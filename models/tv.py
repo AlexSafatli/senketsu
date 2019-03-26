@@ -22,7 +22,6 @@ class TVShow(MediaCenterRecord):
                 self.seasons.append(TVShowSeason(self, fi))
             else:
                 self.other_files.append(fi)
-        self.seasons.sort()
 
     def get_season(self, snum):
         for season in self.seasons:
