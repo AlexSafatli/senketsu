@@ -1,11 +1,15 @@
 import filetype
 
+from sre_constants import error
 from glob import glob
 import os
 
 
 def get_files_in_path(path, glob_pattern='*'):
-    return glob(os.path.join(path, glob_pattern))
+    try:
+        return glob(os.path.join(path, glob_pattern))
+    except error:
+        return []
 
 
 def get_file_name_parts(path):
