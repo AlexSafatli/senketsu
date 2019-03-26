@@ -30,6 +30,11 @@ class AnimeShow(MediaCenterRecord):
                 return season
         return None
 
+    def to_dict(self):
+        d = super().to_dict()
+        d['Number of Seasons'] = len(self.seasons)
+        return d
+
 
 class AnimeSeason(MediaCenterRecord):
     parent = None
