@@ -34,7 +34,7 @@ class TVShow(MediaCenterRecord):
     def to_dict(self):
         d = super().to_dict()
         d['Number of Seasons'] = len(self.seasons)
-        d['Number of Episodes'] = sum(map(lambda x: len(x), self.seasons))
+        d['Number of Episodes'] = sum(len(x) for x in self.seasons)
         return d
 
 
