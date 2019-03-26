@@ -22,13 +22,15 @@ def database():
 @click.argument('root_path')
 @click.option('-d', '--driver', type=click.Choice(['Airtable']),
               default='Airtable')
-def write(root_path, driver):
+def sync(root_path, driver):
     if not os.path.isdir(root_path):
         raise OSError('Path %s not found' % root_path)
     library = models.base.MediaLibrary(root_path)
     d = db.driver.get_driver_by_name(driver)
-    w = db.writer.write_media_library_to_db(library, d, config.CONFIG)
-    click.echo('Wrote %d records to %s' % (w, driver))
+    wr, deleted = db.writer.sync_media_library_with_db(
+        library, d, config.CONFIG)
+    click.echo('Wrote %d records to %s' % (wr, driver))
+    click.echo('Deleted %d records from %s' % (deleted, driver))
 
 
 if __name__ == '__main__':

@@ -3,11 +3,12 @@ import models
 
 
 class MediaLibrary(object):
-    _library_paths = []
+    _library_paths = list()
     root_path = ''
-    tv_shows = []
-    movies = []
-    anime = []
+    tv_shows = list()
+    movies = list()
+    anime = list()
+    unformatted = list()
 
     def __init__(self, root_path):
         self.root_path = root_path
@@ -21,21 +22,27 @@ class MediaLibrary(object):
 
     def _get_tv_shows(self):
         for p in self._library_paths:
-            if p.formatted is True and \
-                    p.media_type == path.structure.MEDIA_TYPE_TV:
-                self.tv_shows.extend(models.tv.get_tv_shows(p))
+            if p.media_type == path.structure.MEDIA_TYPE_TV:
+                if p.formatted:
+                    self.tv_shows.extend(models.tv.get_tv_shows(p))
+                else:
+                    self.unformatted.extend(models.tv.get_tv_shows(p))
 
     def _get_movies(self):
         for p in self._library_paths:
-            if p.formatted is True and \
-                    p.media_type == path.structure.MEDIA_TYPE_MOVIES:
-                self.movies.extend(models.movie.get_movies(p))
+            if p.media_type == path.structure.MEDIA_TYPE_MOVIES:
+                if p.formatted:
+                    self.movies.extend(models.movie.get_movies(p))
+                else:
+                    self.unformatted.extend(models.movie.get_movies(p))
 
     def _get_anime(self):
         for p in self._library_paths:
-            if p.formatted is True and \
-                    p.media_type == path.structure.MEDIA_TYPE_ANIME:
-                self.anime.extend(models.anime.get_anime_shows(p))
+            if p.media_type == path.structure.MEDIA_TYPE_ANIME:
+                if p.formatted:
+                    self.anime.extend(models.anime.get_anime_shows(p))
+                else:
+                    self.unformatted.extend(models.anime.get_anime_shows(p))
 
     def get_media_for_media_type(self, media_type):
         if media_type == path.structure.MEDIA_TYPE_TV:
@@ -54,5 +61,7 @@ class MediaCenterRecord(path.structure.MediaCenterPath):
     def to_dict(self):
         return {
             'Name': self.name,
-            'Type': path.structure.get_media_library_type_label(self.media_type)
+            'Type': path.structure.get_media_library_type_label(
+                self.media_type),
+            'Path': self.path
         }
