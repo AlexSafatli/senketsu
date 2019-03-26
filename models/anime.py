@@ -55,7 +55,7 @@ class AnimeSeason(MediaCenterRecord):
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             fi_type = helpers.get_file_type(fi)
-            if 'video' in fi_type.mime and \
+            if fi_type is not None and 'video' in fi_type.mime and \
                     'OP' not in name and 'ED' not in name:
                 self.episodes.append(fi)
 

@@ -54,7 +54,7 @@ class TVShowSeason(MediaCenterRecord):
     def _populate(self):
         for fi in self:
             fi_type = helpers.get_file_type(fi)
-            if 'video' in fi_type.mime:
+            if fi_type is not None and 'video' in fi_type.mime:
                 self.episodes.append(fi)
 
 
