@@ -6,6 +6,7 @@ MEDIA_TYPE_UNKNOWN = 0
 MEDIA_TYPE_TV = 1
 MEDIA_TYPE_MOVIES = 2
 MEDIA_TYPE_ANIME = 3
+MEDIA_TYPE_CHILD = 4
 
 NOT_FORMATTED = '(Not Formatted)'
 LABEL_TV = 'TV Shows'
@@ -22,6 +23,14 @@ class MediaCenterPath(object):
         self.path = path
         self.media_type = mtype
         self.formatted = formatted
+
+    @property
+    def name(self):
+        return helpers.get_file_name_parts(self.path)[0]
+
+    @property
+    def extension(self):
+        return helpers.get_file_name_parts(self.path)[1]
 
     def __len__(self):
         return len(helpers.get_files_in_path(self.path))

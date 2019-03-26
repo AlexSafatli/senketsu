@@ -7,6 +7,11 @@ def main():
 
 
 @main.group()
+def crawl():
+    pass
+
+
+@main.group()
 def rename():
     pass
 
@@ -14,10 +19,7 @@ def rename():
 @rename.command()
 @click.argument('path')
 def tv(path):
-    if database.insert_unique_record(table, 'Name', thing, data):
-        click.echo("Inserted %s into %s" % (thing, path))
-    else:
-        click.echo("Already found name %s in %s" % (thing, path))
+    pass
 
 
 if __name__ == '__main__':

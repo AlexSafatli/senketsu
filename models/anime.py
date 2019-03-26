@@ -7,19 +7,19 @@ from models.record import MediaCenterRecord
 LABEL_TV_SEASON = 'Season'
 
 
-class TVShow(MediaCenterRecord):
+class AnimeShow(MediaCenterRecord):
     seasons = []
     other_files = []
 
     def __init__(self, tvpath):
-        super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
+        super().__init__(tvpath, path.structure.MEDIA_TYPE_ANIME)
         self._populate()
 
     def _populate(self):
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             if os.path.isdir(fi) and LABEL_TV_SEASON in name:
-                self.seasons.append(TVShowSeason(self, fi))
+                self.seasons.append(AnimeSeason(self, fi))
             else:
                 self.other_files.append(fi)
         self.seasons.sort()
@@ -31,7 +31,7 @@ class TVShow(MediaCenterRecord):
         return None
 
 
-class TVShowSeason(MediaCenterRecord):
+class AnimeSeason(MediaCenterRecord):
     parent = None
     path = ''
 
@@ -40,10 +40,10 @@ class TVShowSeason(MediaCenterRecord):
         self.parent = parent
 
 
-def get_tv_shows(tv_path):
+def get_anime_shows(anime_path):
     shows = []
-    if tv_path.media_type != path.structure.MEDIA_TYPE_TV:
+    if anime_path.media_type != path.structure.MEDIA_TYPE_ANIME:
         raise ValueError('No TV shows in non-TV show path')
-    for subpath in tv_path:
-        shows.append(TVShow(subpath))
+    for subpath in anime_path:
+        shows.append(AnimeShow(subpath))
     return shows
