@@ -34,16 +34,28 @@ class TVShow(MediaCenterRecord):
     def to_dict(self):
         d = super().to_dict()
         d['Number of Seasons'] = len(self.seasons)
+        d['Number of Episodes'] = sum(map(lambda x: len(x), self.seasons))
         return d
 
 
 class TVShowSeason(MediaCenterRecord):
     parent = None
     path = ''
+    episodes = list()
 
     def __init__(self, parent, spath):
         super().__init__(spath, path.structure.MEDIA_TYPE_CHILD)
         self.parent = parent
+        self._populate()
+
+    def __len__(self):
+        return len(self.episodes)
+
+    def _populate(self):
+        for fi in self:
+            fi_type = helpers.get_file_type(fi)
+            if 'video' in fi_type.mime:
+                self.episodes.append(fi)
 
 
 def get_tv_shows(tv_path):
