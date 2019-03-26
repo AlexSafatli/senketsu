@@ -8,11 +8,13 @@ LABEL_TV_SEASON = 'Season'
 
 
 class TVShow(MediaCenterRecord):
-    seasons = []
-    other_files = []
+    seasons = None
+    other_files = None
 
     def __init__(self, tvpath):
         super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
+        self.seasons = list()
+        self.other_files = list()
         self._populate()
 
     def _populate(self):
