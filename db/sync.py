@@ -8,14 +8,14 @@ def write_media_library_to_db(media_library, driver, config):
         if table_name is not None:
             conn = driver.new_connection(config, table_name)
             for media in media_library.get_media_for_media_type(media_type):
-                if (driver.insert_unique_record(conn, 'Name', media.name,
-                                                media.to_dict())):
+                d = media.to_dict()
+                if driver.insert_unique_record(conn, 'Name', d['Name'], d):
                     written += 1
     if len(media_library.unformatted) > 0:
         conn = driver.new_connection(config, 'Unformatted')
         for media in media_library.unformatted:
-            if (driver.insert_unique_record(conn, 'Name', media.name,
-                                            media.to_dict())):
+            d = media.to_dict()
+            if driver.insert_unique_record(conn, 'Name', d['Name'], d):
                 written += 1
     return written
 
@@ -28,14 +28,15 @@ def delete_unknown_records_from_db(media_library, driver, config):
             conn = driver.new_connection(config, table_name)
             records = driver.get_records(conn)
             media = media_library.get_media_for_media_type(media_type)
-            names = list(map(lambda x: x.name, media))
+            names = list(map(lambda x: x.to_dict()['Name'], media))
             for record in records:
                 if 'Name' in record and record['Name'] not in names:
                     driver.remove_record('Name', record['Name'])
                     deleted += 1
     conn = driver.new_connection(config, 'Unformatted')
     records = driver.get_records(conn)
-    unformatted_names = list(map(lambda x: x.name, media_library.unformatted))
+    unformatted_names = list(map(lambda x: x.to_dict()['Name'],
+                                 media_library.unformatted))
     for record in records:
         if 'Name' in record and record['Name'] not in unformatted_names:
             driver.remove_record('Name', record['Name'])
