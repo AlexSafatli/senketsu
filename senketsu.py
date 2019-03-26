@@ -27,7 +27,7 @@ def write(root_path, driver):
         raise OSError('Path %s not found' % root_path)
     library = models.base.MediaLibrary(root_path)
     d = db.driver.get_driver_by_name(driver)
-    w = db.writer.write_media_library_to_db(library, d, config)
+    w = db.writer.write_media_library_to_db(library, d, config.CONFIG)
     click.echo('Wrote %d records to %s' % (w, driver))
 
 
