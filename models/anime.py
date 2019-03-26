@@ -2,7 +2,7 @@ import os
 
 import path.structure
 from path import helpers
-from models.record import MediaCenterRecord
+from models.base import MediaCenterRecord
 
 LABEL_TV_SEASON = 'Season'
 
@@ -43,7 +43,7 @@ class AnimeSeason(MediaCenterRecord):
 def get_anime_shows(anime_path):
     shows = []
     if anime_path.media_type != path.structure.MEDIA_TYPE_ANIME:
-        raise ValueError('No TV shows in non-TV show path')
+        raise ValueError('No anime in non-anime show path')
     for subpath in anime_path:
         shows.append(AnimeShow(subpath))
     return shows

@@ -1,0 +1,5 @@
+CONFIG = {
+    'airtable_api_key': 'SAtMCXdXbxbOhSuEP',
+    'airtable_base_name': 'Media',
+    'airtable_base_media_key': 'WUyBITXEVGrChYOfp'
+}

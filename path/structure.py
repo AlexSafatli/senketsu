@@ -57,6 +57,21 @@ def get_media_library_paths(root_path):
                 mtype = MEDIA_TYPE_MOVIES
             elif LABEL_ANIME in name:
                 mtype = MEDIA_TYPE_ANIME
-            library_path = MediaCenterPath(fi, mtype, NOT_FORMATTED in name)
+            library_path = MediaCenterPath(fi, mtype,
+                                           not (NOT_FORMATTED in name))
             library.append(library_path)
     return library
+
+
+def get_media_library_types():
+    return [MEDIA_TYPE_TV, MEDIA_TYPE_MOVIES, MEDIA_TYPE_ANIME]
+
+
+def get_media_library_type_label(media_type):
+    if media_type == MEDIA_TYPE_TV:
+        return LABEL_TV
+    elif media_type == MEDIA_TYPE_MOVIES:
+        return LABEL_MOVIES
+    elif media_type == MEDIA_TYPE_ANIME:
+        return LABEL_ANIME
+    return None

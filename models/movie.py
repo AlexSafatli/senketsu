@@ -2,7 +2,7 @@ import os
 
 import path.structure
 from path import helpers
-from models.record import MediaCenterRecord
+from models.base import MediaCenterRecord
 
 
 class Movie(MediaCenterRecord):
