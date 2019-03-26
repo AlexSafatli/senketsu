@@ -30,14 +30,14 @@ def delete_unknown_records_from_db(media_library, driver, config):
             media = media_library.get_media_for_media_type(media_type)
             names = list(map(lambda x: x.name, media))
             for record in records:
-                if record['Name'] not in names:
+                if 'Name' in record and record['Name'] not in names:
                     driver.remove_record('Name', record['Name'])
                     deleted += 1
     conn = driver.new_connection(config, 'Unformatted')
     records = driver.get_records(conn)
     unformatted_names = list(map(lambda x: x.name, media_library.unformatted))
     for record in records:
-        if record['Name'] not in unformatted_names:
+        if 'Name' in record and record['Name'] not in unformatted_names:
             driver.remove_record('Name', record['Name'])
             deleted += 1
     return deleted
