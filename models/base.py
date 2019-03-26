@@ -21,17 +21,20 @@ class MediaLibrary(object):
 
     def _get_tv_shows(self):
         for p in self._library_paths:
-            if p.media_type == path.structure.MEDIA_TYPE_TV:
+            if p.formatted is True and \
+                    p.media_type == path.structure.MEDIA_TYPE_TV:
                 self.tv_shows.extend(models.tv.get_tv_shows(p))
 
     def _get_movies(self):
         for p in self._library_paths:
-            if p.media_type == path.structure.MEDIA_TYPE_MOVIES:
+            if p.formatted is True and \
+                    p.media_type == path.structure.MEDIA_TYPE_MOVIES:
                 self.movies.extend(models.movie.get_movies(p))
 
     def _get_anime(self):
         for p in self._library_paths:
-            if p.media_type == path.structure.MEDIA_TYPE_ANIME:
+            if p.formatted is True and \
+                    p.media_type == path.structure.MEDIA_TYPE_ANIME:
                 self.anime.extend(models.anime.get_anime_shows(p))
 
     def get_media_for_media_type(self, media_type):
