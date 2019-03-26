@@ -1,6 +1,6 @@
 import path.structure
 
-from models import *
+from models import tv, movie, anime
 
 
 class MediaLibrary(object):
