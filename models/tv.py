@@ -41,11 +41,12 @@ class TVShow(MediaCenterRecord):
 class TVShowSeason(MediaCenterRecord):
     parent = None
     path = ''
-    episodes = list()
+    episodes = None
 
     def __init__(self, parent, spath):
         super().__init__(spath, path.structure.MEDIA_TYPE_CHILD)
         self.parent = parent
+        self.episodes = list()
         self._populate()
 
     def __len__(self):
