@@ -5,7 +5,7 @@ import os
 import config
 import models.base
 import db.driver
-import db.writer
+import db.sync
 
 
 @click.group()
@@ -27,7 +27,7 @@ def sync(root_path, driver):
         raise OSError('Path %s not found' % root_path)
     library = models.base.MediaLibrary(root_path)
     d = db.driver.get_driver_by_name(driver)
-    wr, deleted = db.writer.sync_media_library_with_db(
+    wr, deleted = db.sync.sync_media_library_with_db(
         library, d, config.CONFIG)
     click.echo('Wrote %d records to %s' % (wr, driver))
     click.echo('Deleted %d records from %s' % (deleted, driver))

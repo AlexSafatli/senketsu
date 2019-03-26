@@ -10,7 +10,7 @@ def new_connection(config, table_name):
 
 
 def get_records(table):
-    return table.get_all()
+    return list(map(lambda x: x['fields'], table.get_all()))
 
 
 def insert_unique_record(table, key_field, key_value, data):
