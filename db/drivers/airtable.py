@@ -1,3 +1,5 @@
+import urllib.parse
+
 from airtable import Airtable
 
 
@@ -12,14 +14,14 @@ def get_records(table):
 
 
 def insert_unique_record(table, key_field, key_value, data):
-    if not table.search(key_field, key_value):
+    if not table.search(key_field, urllib.parse.quote_plus(key_value)):
         table.insert(data)
         return True
     return False
 
 
 def remove_record(table, key_field, key_value):
-    if table.search(key_field, key_value):
+    if table.search(key_field, urllib.parse.quote_plus(key_value)):
         table.delete_by_field(key_field, key_value)
         return True
     return False
