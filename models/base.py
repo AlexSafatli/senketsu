@@ -1,3 +1,5 @@
+import re
+
 import path.structure
 import models
 
@@ -60,7 +62,7 @@ class MediaCenterRecord(path.structure.MediaCenterPath):
 
     def to_dict(self):
         return {
-            'Name': self.name,
+            'Name': re.sub(r'[^a-zA-Z0-9 ]', '', self.name),
             'Type': path.structure.get_media_library_type_label(
                 self.media_type),
             'Path': self.path
