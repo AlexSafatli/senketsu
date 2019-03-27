@@ -6,7 +6,7 @@ import models
 
 
 class MediaLibrary(object):
-    _library_paths = list()
+    __library_paths = list()
     root_path = ''
     tv_shows = list()
     movies = list()
@@ -16,7 +16,7 @@ class MediaLibrary(object):
 
     def __init__(self, root_path):
         self.root_path = root_path
-        self._library_paths = path.structure.get_media_library_paths(root_path)
+        self.__library_paths = path.structure.get_media_library_paths(root_path)
         self._populate()
 
     def __len__(self):
@@ -24,7 +24,7 @@ class MediaLibrary(object):
                len(self.dramas)
 
     def _populate(self):
-        for p in self._library_paths:
+        for p in self.__library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_TV:
                 if p.formatted:
                     self.tv_shows.extend(models.tv.get_tv_shows(p))
@@ -59,22 +59,22 @@ class MediaLibrary(object):
 
 
 class MediaLocation(path.structure.MediaCenterPath):
-    _size = None
-    _clean_name = ''
+    __size = None
+    __clean_name = ''
 
     def __init__(self, mpath, mtype):
         super().__init__(mpath, mtype, True)
-        self._clean_name = re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name)
+        self.__clean_name = re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name)
 
     @property
     def clean_name(self):
-        return self._clean_name
+        return self.__clean_name
 
     @property
     def file_size(self):
-        if self._size is None:
-            self._size = path.helpers.get_folder_size(self.path)
-        return self._size
+        if self.__size is None:
+            self.__size = path.helpers.get_folder_size(self.path)
+        return self.__size
 
     def to_dict(self):
         return {
