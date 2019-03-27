@@ -2,12 +2,12 @@ import os
 
 import path.structure
 from path import helpers
-from models.base import MediaCenterRecord
+from models.base import MediaLocation
 
 LABEL_TV_SEASON = 'Season'
 
 
-class AnimeShow(MediaCenterRecord):
+class AnimeShow(MediaLocation):
     seasons = None
     other_files = None
 
@@ -38,7 +38,7 @@ class AnimeShow(MediaCenterRecord):
         return d
 
 
-class AnimeSeason(MediaCenterRecord):
+class AnimeSeason(MediaLocation):
     parent = None
     path = ''
     episodes = None

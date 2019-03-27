@@ -1,11 +1,11 @@
 import os
 
 import path.structure
-from models.base import MediaCenterRecord
+from models.base import MediaLocation
 from path import helpers
 
 
-class Movie(MediaCenterRecord):
+class Movie(MediaLocation):
     movie_file = None
     other_dirs = []
     other_files = []

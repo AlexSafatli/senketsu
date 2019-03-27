@@ -12,10 +12,11 @@ def get_records(table):
 
 
 def insert_unique_record(table, key_field, key_value, data):
-    if not table.search(key_field, key_value):
+    search = table.search(key_field, key_value)
+    if not search:
         table.insert(data)
         return True
-    return False
+    return table.replace(search[0]['id'], data)
 
 
 def remove_record(table, key_field, key_value):
@@ -23,6 +24,10 @@ def remove_record(table, key_field, key_value):
         table.delete_by_field(key_field, key_value)
         return True
     return False
+
+
+def mirror_records(table, records):
+    return table.mirror(records)
 
 
 def get_database_path(base_name, table_name):

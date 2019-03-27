@@ -54,14 +54,20 @@ class MediaLibrary(object):
             return self.anime
         elif media_type == path.structure.MEDIA_TYPE_DRAMA:
             return self.dramas
-        return []
+        return list()
 
 
-class MediaCenterRecord(path.structure.MediaCenterPath):
+class MediaLocation(path.structure.MediaCenterPath):
     _size = None
+    _clean_name = ''
 
     def __init__(self, mpath, mtype):
         super().__init__(mpath, mtype, True)
+        self._clean_name = re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name)
+
+    @property
+    def clean_name(self):
+        return self._clean_name
 
     @property
     def file_size(self):
@@ -71,9 +77,9 @@ class MediaCenterRecord(path.structure.MediaCenterPath):
 
     def to_dict(self):
         return {
-            'Name': re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name),
+            'Name': self.clean_name,
             'Type': path.structure.get_media_library_type_label(
                 self.media_type),
             'Path': self.path,
-            'Size': self.file_size * 1e-9
+            'Size': self.file_size * 1.0e-9
         }
