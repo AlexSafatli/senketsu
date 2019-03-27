@@ -11,41 +11,39 @@ class MediaLibrary(object):
     tv_shows = list()
     movies = list()
     anime = list()
+    dramas = list()
     unformatted = list()
 
     def __init__(self, root_path):
         self.root_path = root_path
         self._library_paths = path.structure.get_media_library_paths(root_path)
-        self._get_tv_shows()
-        self._get_movies()
-        self._get_anime()
+        self._populate()
 
     def __len__(self):
         return len(self.tv_shows) + len(self.movies) + len(self.anime)
 
-    def _get_tv_shows(self):
+    def _populate(self):
         for p in self._library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_TV:
                 if p.formatted:
                     self.tv_shows.extend(models.tv.get_tv_shows(p))
                 else:
                     self.unformatted.extend(models.tv.get_tv_shows(p))
-
-    def _get_movies(self):
-        for p in self._library_paths:
-            if p.media_type == path.structure.MEDIA_TYPE_MOVIES:
+            elif p.media_type == path.structure.MEDIA_TYPE_MOVIES:
                 if p.formatted:
                     self.movies.extend(models.movie.get_movies(p))
                 else:
                     self.unformatted.extend(models.movie.get_movies(p))
-
-    def _get_anime(self):
-        for p in self._library_paths:
-            if p.media_type == path.structure.MEDIA_TYPE_ANIME:
+            elif p.media_type == path.structure.MEDIA_TYPE_ANIME:
                 if p.formatted:
                     self.anime.extend(models.anime.get_anime_shows(p))
                 else:
                     self.unformatted.extend(models.anime.get_anime_shows(p))
+            elif p.media_type == path.structure.MEDIA_TYPE_DRAMA:
+                if p.formatted:
+                    self.dramas.extend(models.dramas.get_dramas(p))
+                else:
+                    self.unformatted.extend(models.dramas.get_dramas(p))
 
     def get_media_for_media_type(self, media_type):
         if media_type == path.structure.MEDIA_TYPE_TV:
@@ -54,6 +52,8 @@ class MediaLibrary(object):
             return self.movies
         elif media_type == path.structure.MEDIA_TYPE_ANIME:
             return self.anime
+        elif media_type == path.structure.MEDIA_TYPE_DRAMA:
+            return self.dramas
         return []
 
 

@@ -66,7 +66,8 @@ def get_media_library_paths(root_path):
 
 
 def get_media_library_types():
-    return [MEDIA_TYPE_TV, MEDIA_TYPE_MOVIES, MEDIA_TYPE_ANIME]
+    return [MEDIA_TYPE_TV, MEDIA_TYPE_MOVIES, MEDIA_TYPE_ANIME,
+            MEDIA_TYPE_DRAMA]
 
 
 def get_media_library_type_label(media_type):
@@ -76,4 +77,6 @@ def get_media_library_type_label(media_type):
         return LABEL_MOVIES
     elif media_type == MEDIA_TYPE_ANIME:
         return LABEL_ANIME
+    elif media_type == MEDIA_TYPE_DRAMA:
+        return LABEL_DRAMA
     return None
