@@ -1,5 +1,6 @@
 import re
 
+import path.helpers
 import path.structure
 import models
 
@@ -57,13 +58,22 @@ class MediaLibrary(object):
 
 
 class MediaCenterRecord(path.structure.MediaCenterPath):
+    _size = None
+
     def __init__(self, mpath, mtype):
         super().__init__(mpath, mtype, True)
+
+    @property
+    def file_size(self):
+        if self._size is None:
+            self._size = path.helpers.get_folder_size(self.path)
+        return self._size
 
     def to_dict(self):
         return {
             'Name': re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name),
             'Type': path.structure.get_media_library_type_label(
                 self.media_type),
-            'Path': self.path
+            'Path': self.path,
+            'Size': '%.2fGB' % self.file_size * 1e-9
         }

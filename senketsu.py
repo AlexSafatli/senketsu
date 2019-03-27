@@ -29,8 +29,8 @@ def sync(root_path, driver):
     d = db.driver.get_driver_by_name(driver)
     wr, deleted = db.sync.sync_media_library_with_db(
         library, d, config.CONFIG)
-    click.echo('Wrote %d records to %s' % (wr, driver))
     click.echo('Deleted %d records from %s' % (deleted, driver))
+    click.echo('Wrote %d records to %s' % (wr, driver))
 
 
 if __name__ == '__main__':
