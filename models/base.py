@@ -75,5 +75,5 @@ class MediaCenterRecord(path.structure.MediaCenterPath):
             'Type': path.structure.get_media_library_type_label(
                 self.media_type),
             'Path': self.path,
-            'Size': '%.2fGB' % self.file_size * 1e-9
+            'Size': self.file_size * 1e-9
         }
