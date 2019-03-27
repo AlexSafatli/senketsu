@@ -20,7 +20,8 @@ class MediaLibrary(object):
         self._populate()
 
     def __len__(self):
-        return len(self.tv_shows) + len(self.movies) + len(self.anime)
+        return len(self.tv_shows) + len(self.movies) + len(self.anime) + \
+               len(self.dramas)
 
     def _populate(self):
         for p in self._library_paths:
