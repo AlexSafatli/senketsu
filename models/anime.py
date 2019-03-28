@@ -13,11 +13,11 @@ class AnimeShow(MediaLocation):
 
     def __init__(self, tvpath):
         super().__init__(tvpath, path.structure.MEDIA_TYPE_ANIME)
+        self.__populate()
+
+    def __populate(self):
         self.seasons = list()
         self.other_files = list()
-        self._populate()
-
-    def _populate(self):
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             if os.path.isdir(fi) and LABEL_TV_SEASON in name:
@@ -47,12 +47,12 @@ class AnimeSeason(MediaLocation):
         super().__init__(spath, path.structure.MEDIA_TYPE_CHILD)
         self.parent = parent
         self.episodes = list()
-        self._populate()
+        self.__populate()
 
     def __len__(self):
         return len(self.episodes)
 
-    def _populate(self):
+    def __populate(self):
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             fi_type = helpers.get_file_type(fi)

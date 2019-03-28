@@ -6,29 +6,34 @@ from path import helpers
 
 
 class Movie(MediaLocation):
-    movie_file = None
+    __movie_file = None
     other_dirs = []
     other_files = []
 
     def __init__(self, tvpath):
         super().__init__(tvpath, path.structure.MEDIA_TYPE_MOVIES)
-        self._populate()
 
-    def _populate(self):
+    def __populate(self):
         for fi in self:
             fi_type = helpers.get_file_type(fi)
             if fi_type is not None and 'video' in fi_type.mime:
-                if self.movie_file is None:
-                    self.movie_file = fi
+                if self.__movie_file is None:
+                    self.__movie_file = fi
                 else:
                     stat = os.stat(fi)
-                    compare = os.stat(self.movie_file)
+                    compare = os.stat(self.__movie_file)
                     if stat.st_size > compare.st_size:
-                        self.movie_file = fi
+                        self.__movie_file = fi
             elif os.path.isdir(fi):
                 self.other_dirs.append(fi)
             elif os.path.isfile(fi):
                 self.other_files.append(fi)
+
+    @property
+    def movie_file(self):
+        if self.__movie_file is None:
+            self.__populate()
+        return self.__movie_file
 
 
 def get_movies(movies_path):
