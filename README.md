@@ -1,8 +1,11 @@
 # senketsu
 Kodi/XBMC Media Library Management and Monitoring
 
+## Current Features
+
+- Airtable integration (catalogues a media library under different tables in a single base)
+
 ## Planned Features
 
-- Airtable integration (catalogue library)
-- More complex renaming
+- Complex renaming
 - Quality recognition
