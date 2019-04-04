@@ -17,13 +17,13 @@ class MediaLibrary(object):
     def __init__(self, root_path):
         self.root_path = root_path
         self.__library_paths = path.structure.get_media_library_paths(root_path)
-        self._populate()
+        self.__populate()
 
     def __len__(self):
         return len(self.tv_shows) + len(self.movies) + len(self.anime) + \
                len(self.dramas)
 
-    def _populate(self):
+    def __populate(self):
         for p in self.__library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_TV:
                 if p.formatted:
