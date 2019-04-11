@@ -6,16 +6,14 @@ import models
 
 
 class MediaLibrary(object):
-    __library_paths = list()
-    root_path = ''
-    tv_shows = list()
-    movies = list()
-    anime = list()
-    dramas = list()
-    unformatted = list()
-
     def __init__(self, root_path):
         self.root_path = root_path
+        self.__library_paths = list()
+        self.tv_shows = list()
+        self.movies = list()
+        self.anime = list()
+        self.dramas = list()
+        self.unformatted = list()
         self.__library_paths = path.structure.get_media_library_paths(root_path)
         self.__populate()
 
@@ -59,16 +57,21 @@ class MediaLibrary(object):
 
 
 class MediaLocation(path.structure.MediaCenterPath):
-    __size = None
-    __clean_name = ''
-
     def __init__(self, mpath, mtype):
         super().__init__(mpath, mtype, True)
+        self.__size = None
         self.__clean_name = re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name)
+        self.scrape = None
 
     @property
     def clean_name(self):
         return self.__clean_name
+
+    @property
+    def scraped_name(self):
+        if self.scrape:
+            return self.scrape['seriesname']
+        return ''
 
     @property
     def file_size(self):
@@ -82,5 +85,6 @@ class MediaLocation(path.structure.MediaCenterPath):
             'Type': path.structure.get_media_library_type_label(
                 self.media_type),
             'Path': self.path,
-            'Size': self.file_size * 1.0e-9
+            'Size': self.file_size * 1.0e-9,
+            'Scrapes To': self.scraped_name
         }

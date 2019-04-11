@@ -3,6 +3,7 @@ import os
 import path.structure
 from path import helpers
 from models.base import MediaLocation
+import scraping.tv
 
 LABEL_DRAMAS_SEASON = 'Season'
 
@@ -14,6 +15,7 @@ class DramaShow(MediaLocation):
     def __init__(self, tvpath):
         super().__init__(tvpath, path.structure.MEDIA_TYPE_DRAMA)
         self.__populate()
+        self.__scrape()
 
     def __populate(self):
         self.seasons = list()
@@ -24,6 +26,10 @@ class DramaShow(MediaLocation):
                 self.seasons.append(DramaShowSeason(self, fi))
             else:
                 self.other_files.append(fi)
+
+    def __scrape(self):
+        self.scrape = scraping.tv.get_tv_show(
+            self.clean_name, scraping.tv.get_tvdb_api_connection())
 
     def get_season(self, snum):
         for season in self.seasons:

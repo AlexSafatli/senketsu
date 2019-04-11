@@ -4,6 +4,7 @@ import os
 
 import config
 import models.base
+import db.base
 import db.driver
 import db.sync
 
@@ -33,6 +34,15 @@ def sync(root_path, driver):
     w, d = db.sync.sync_media_library_with_db(library, drive, config.CONFIG)
     click.echo('Deleted %d records from %s' % (d, driver))
     click.echo('Wrote %d records to %s' % (w, driver))
+
+
+@database.command()
+@click.option('-d', '--driver', type=click.Choice(['Airtable']),
+              default='Airtable')
+def scrape(driver):
+    drive = db.driver.get_driver_by_name(driver)
+    u = db.base.scrape_media_library_in_db(drive, config.CONFIG)
+    click.echo('Updated %d records in %s' % (u, driver))
 
 
 if __name__ == '__main__':
