@@ -20,4 +20,4 @@ def scrape_media_library_in_db(driver, config):
                     except tvdb_api.tvdb_shownotfound:
                         record['fields']['Scrapes To'] = ''
                     updated.append(conn.update(record['id'], record['fields']))
-    return updated
+    return len(updated)
