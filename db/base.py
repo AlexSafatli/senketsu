@@ -18,7 +18,7 @@ def scrape_media_library_in_db(driver, config):
                         s = scraper[fields['Name']]
                         record['fields']['Scrapes To'] = s['seriesname']
                         record['fields']['Rating'] = float(s['siteRating']) if \
-                            s['rating'] else 0.0
+                            s['siteRating'] else 0.0
                     except tvdb_api.tvdb_shownotfound:
                         record['fields']['Scrapes To'] = ''
                     updated.append(conn.update(record['id'], record['fields']))
