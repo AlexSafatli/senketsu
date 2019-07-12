@@ -9,7 +9,7 @@ BRACKETS_REGEXP = r'\[[a-zA-Z0-9]*\]'
 
 
 def get_series_name_and_season(file):
-    path_spl = os.path.dirname(file).split('/')
+    path_spl: str = str(os.path.dirname(file).split('/'))
     series_name = path_spl[-2].replace('\\', '')
     season_name = path_spl[-1].replace('\\', '')
     season_digits = re.findall(NUMBERS_REGEXP, season_name)

@@ -31,6 +31,12 @@ class DramaShow(MediaLocation):
         self.scrape = scraping.tv.get_tv_show(
             self.clean_name, scraping.tv.get_tvdb_api_connection())
 
+    @property
+    def rating(self) -> float:
+        if self.scrape:
+            return scraping.tv.get_tv_show_rating(self.scrape)
+        return 0
+
     def get_season(self, snum):
         for season in self.seasons:
             if 'Season %d' % snum == season.name:
@@ -41,6 +47,7 @@ class DramaShow(MediaLocation):
         d = super().to_dict()
         d['Number of Seasons'] = len(self.seasons)
         d['Number of Episodes'] = sum(len(x) for x in self.seasons)
+        d['Rating'] = self.rating
         return d
 
 

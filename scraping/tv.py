@@ -5,7 +5,7 @@ def get_tvdb_api_connection():
     return tvdb_api.Tvdb()
 
 
-def get_tv_show(show_name, tvdb):
+def get_tv_show(show_name, tvdb) -> tvdb_api.Show or None:
     try:
         show = tvdb[show_name]
     except tvdb_api.tvdb_error:
@@ -14,3 +14,6 @@ def get_tv_show(show_name, tvdb):
         return None
     return show
 
+
+def get_tv_show_rating(tv_show: tvdb_api.Show) -> float:
+    return tv_show['siteRating']

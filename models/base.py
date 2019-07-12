@@ -5,6 +5,11 @@ import path.structure
 import models
 
 
+__clean_name_regex = r'[^a-zA-Z0-9()\- ]'
+
+CLEAN_NAME_REGEX = re.compile(__clean_name_regex)
+
+
 class MediaLibrary(object):
     def __init__(self, root_path):
         self.root_path = root_path
@@ -60,7 +65,7 @@ class MediaLocation(path.structure.MediaCenterPath):
     def __init__(self, mpath, mtype):
         super().__init__(mpath, mtype, True)
         self.__size = None
-        self.__clean_name = re.sub(r'[^a-zA-Z0-9()\- ]', '', self.name)
+        self.__clean_name = CLEAN_NAME_REGEX.sub('', self.name)
         self.scrape = None
 
     @property
