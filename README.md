@@ -9,3 +9,4 @@ Kodi/XBMC Media Library Management and Monitoring
 
 - Complex renaming
 - Quality recognition
+- Manage a watch list (akin to [MyAnimeList](http://myanimelist.net)'s) for all of TV Shows, Movies, Dramas, Anime, ....
