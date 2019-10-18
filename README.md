@@ -15,3 +15,8 @@ Kodi/XBMC Media Library Management and Monitoring
   - Sync to MyDramaList for Asian Dramas
   - Save to AirTable
   - Save locally
+
+### Watchlist APIs
+
+ - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy)
+ - MyDramaList - none - need to scrape HTML
