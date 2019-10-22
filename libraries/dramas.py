@@ -2,18 +2,18 @@ import os
 
 import path.structure
 from path import helpers
-from models.base import MediaLocation
+from libraries.base import MediaLocation
 import scraping.tv
 
-LABEL_TV_SEASON = 'Season'
+LABEL_DRAMAS_SEASON = 'Season'
 
 
-class AnimeShow(MediaLocation):
+class DramaShow(MediaLocation):
     seasons = None
     other_files = None
 
     def __init__(self, tvpath):
-        super().__init__(tvpath, path.structure.MEDIA_TYPE_ANIME)
+        super().__init__(tvpath, path.structure.MEDIA_TYPE_DRAMA)
         self.__populate()
         self.__scrape()
 
@@ -22,8 +22,8 @@ class AnimeShow(MediaLocation):
         self.other_files = list()
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
-            if os.path.isdir(fi) and LABEL_TV_SEASON in name:
-                self.seasons.append(AnimeSeason(self, fi))
+            if os.path.isdir(fi) and LABEL_DRAMAS_SEASON in name:
+                self.seasons.append(DramaShowSeason(self, fi))
             else:
                 self.other_files.append(fi)
 
@@ -51,7 +51,7 @@ class AnimeShow(MediaLocation):
         return d
 
 
-class AnimeSeason(MediaLocation):
+class DramaShowSeason(MediaLocation):
     parent = None
     path = ''
     episodes = None
@@ -67,17 +67,15 @@ class AnimeSeason(MediaLocation):
 
     def __populate(self):
         for fi in self:
-            name = helpers.get_file_name_parts(fi)[0]
             fi_type = helpers.get_file_type(fi)
-            if fi_type is not None and 'video' in fi_type.mime and \
-                    'OP' not in name and 'ED' not in name:
+            if fi_type is not None and 'video' in fi_type.mime:
                 self.episodes.append(fi)
 
 
-def get_anime_shows(anime_path):
+def get_dramas(dramas_path):
     shows = []
-    if anime_path.media_type != path.structure.MEDIA_TYPE_ANIME:
-        raise ValueError('No anime in non-anime show path')
-    for subpath in anime_path:
-        shows.append(AnimeShow(subpath))
+    if dramas_path.media_type != path.structure.MEDIA_TYPE_DRAMA:
+        raise ValueError('No dramas in non-dramas show path')
+    for subpath in dramas_path:
+        shows.append(DramaShow(subpath))
     return shows

@@ -3,7 +3,7 @@ import click
 import os
 
 import config
-import models.base
+import libraries.base
 import db.base
 import db.driver
 import db.sync
@@ -28,7 +28,7 @@ def sync(root_path, driver):
         raise OSError('Path %s not found' % root_path)
     click.echo('Reading file system (%s) to populate media library...' %
                root_path)
-    library = models.base.MediaLibrary(root_path)
+    library = libraries.base.MediaLibrary(root_path)
     click.echo('Found %d formatted media records...' % len(library))
     drive = db.driver.get_driver_by_name(driver)
     w, d = db.sync.sync_media_library_with_db(library, drive, config.CONFIG)

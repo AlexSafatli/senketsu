@@ -71,6 +71,18 @@ def get_media_library_types():
             MEDIA_TYPE_DRAMA]
 
 
+def get_media_library_type_from_label(media_label):
+    if media_label == LABEL_TV:
+        return MEDIA_TYPE_TV
+    elif media_label == LABEL_MOVIES:
+        return MEDIA_TYPE_MOVIES
+    elif media_label == LABEL_ANIME:
+        return MEDIA_TYPE_ANIME
+    elif media_label == LABEL_DRAMA:
+        return MEDIA_TYPE_DRAMA
+    return None
+
+
 def get_media_library_type_label(media_type):
     if media_type == MEDIA_TYPE_TV:
         return LABEL_TV

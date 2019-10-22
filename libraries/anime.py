@@ -2,15 +2,18 @@ import os
 
 import path.structure
 from path import helpers
-from models.base import MediaLocation
+from libraries.base import MediaLocation
 import scraping.tv
 
 LABEL_TV_SEASON = 'Season'
 
 
-class TVShow(MediaLocation):
+class AnimeShow(MediaLocation):
+    seasons = None
+    other_files = None
+
     def __init__(self, tvpath):
-        super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
+        super().__init__(tvpath, path.structure.MEDIA_TYPE_ANIME)
         self.__populate()
         self.__scrape()
 
@@ -20,7 +23,7 @@ class TVShow(MediaLocation):
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             if os.path.isdir(fi) and LABEL_TV_SEASON in name:
-                self.seasons.append(TVShowSeason(self, fi))
+                self.seasons.append(AnimeSeason(self, fi))
             else:
                 self.other_files.append(fi)
 
@@ -48,7 +51,7 @@ class TVShow(MediaLocation):
         return d
 
 
-class TVShowSeason(MediaLocation):
+class AnimeSeason(MediaLocation):
     parent = None
     path = ''
     episodes = None
@@ -64,15 +67,17 @@ class TVShowSeason(MediaLocation):
 
     def __populate(self):
         for fi in self:
+            name = helpers.get_file_name_parts(fi)[0]
             fi_type = helpers.get_file_type(fi)
-            if fi_type is not None and 'video' in fi_type.mime:
+            if fi_type is not None and 'video' in fi_type.mime and \
+                    'OP' not in name and 'ED' not in name:
                 self.episodes.append(fi)
 
 
-def get_tv_shows(tv_path):
+def get_anime_shows(anime_path):
     shows = []
-    if tv_path.media_type != path.structure.MEDIA_TYPE_TV:
-        raise ValueError('No TV shows in non-TV show path')
-    for subpath in tv_path:
-        shows.append(TVShow(subpath))
+    if anime_path.media_type != path.structure.MEDIA_TYPE_ANIME:
+        raise ValueError('No anime in non-anime show path')
+    for subpath in anime_path:
+        shows.append(AnimeShow(subpath))
     return shows

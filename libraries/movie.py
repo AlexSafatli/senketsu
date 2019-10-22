@@ -1,7 +1,7 @@
 import os
 
 import path.structure
-from models.base import MediaLocation
+from libraries.base import MediaLocation
 from path import helpers
 
 

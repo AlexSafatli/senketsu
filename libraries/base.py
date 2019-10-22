@@ -2,7 +2,7 @@ import re
 
 import path.helpers
 import path.structure
-import models
+import libraries
 
 
 __clean_name_regex = r'[^a-zA-Z0-9()\- ]'
@@ -30,24 +30,24 @@ class MediaLibrary(object):
         for p in self.__library_paths:
             if p.media_type == path.structure.MEDIA_TYPE_TV:
                 if p.formatted:
-                    self.tv_shows.extend(models.tv.get_tv_shows(p))
+                    self.tv_shows.extend(libraries.tv.get_tv_shows(p))
                 else:
-                    self.unformatted.extend(models.tv.get_tv_shows(p))
+                    self.unformatted.extend(libraries.tv.get_tv_shows(p))
             elif p.media_type == path.structure.MEDIA_TYPE_MOVIES:
                 if p.formatted:
-                    self.movies.extend(models.movie.get_movies(p))
+                    self.movies.extend(libraries.movie.get_movies(p))
                 else:
-                    self.unformatted.extend(models.movie.get_movies(p))
+                    self.unformatted.extend(libraries.movie.get_movies(p))
             elif p.media_type == path.structure.MEDIA_TYPE_ANIME:
                 if p.formatted:
-                    self.anime.extend(models.anime.get_anime_shows(p))
+                    self.anime.extend(libraries.anime.get_anime_shows(p))
                 else:
-                    self.unformatted.extend(models.anime.get_anime_shows(p))
+                    self.unformatted.extend(libraries.anime.get_anime_shows(p))
             elif p.media_type == path.structure.MEDIA_TYPE_DRAMA:
                 if p.formatted:
-                    self.dramas.extend(models.dramas.get_dramas(p))
+                    self.dramas.extend(libraries.dramas.get_dramas(p))
                 else:
-                    self.unformatted.extend(models.dramas.get_dramas(p))
+                    self.unformatted.extend(libraries.dramas.get_dramas(p))
 
     def get_media_for_media_type(self, media_type):
         if media_type == path.structure.MEDIA_TYPE_TV:

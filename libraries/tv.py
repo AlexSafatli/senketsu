@@ -2,18 +2,15 @@ import os
 
 import path.structure
 from path import helpers
-from models.base import MediaLocation
+from libraries.base import MediaLocation
 import scraping.tv
 
-LABEL_DRAMAS_SEASON = 'Season'
+LABEL_TV_SEASON = 'Season'
 
 
-class DramaShow(MediaLocation):
-    seasons = None
-    other_files = None
-
+class TVShow(MediaLocation):
     def __init__(self, tvpath):
-        super().__init__(tvpath, path.structure.MEDIA_TYPE_DRAMA)
+        super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
         self.__populate()
         self.__scrape()
 
@@ -22,8 +19,8 @@ class DramaShow(MediaLocation):
         self.other_files = list()
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
-            if os.path.isdir(fi) and LABEL_DRAMAS_SEASON in name:
-                self.seasons.append(DramaShowSeason(self, fi))
+            if os.path.isdir(fi) and LABEL_TV_SEASON in name:
+                self.seasons.append(TVShowSeason(self, fi))
             else:
                 self.other_files.append(fi)
 
@@ -51,7 +48,7 @@ class DramaShow(MediaLocation):
         return d
 
 
-class DramaShowSeason(MediaLocation):
+class TVShowSeason(MediaLocation):
     parent = None
     path = ''
     episodes = None
@@ -72,10 +69,10 @@ class DramaShowSeason(MediaLocation):
                 self.episodes.append(fi)
 
 
-def get_dramas(dramas_path):
+def get_tv_shows(tv_path):
     shows = []
-    if dramas_path.media_type != path.structure.MEDIA_TYPE_DRAMA:
-        raise ValueError('No dramas in non-dramas show path')
-    for subpath in dramas_path:
-        shows.append(DramaShow(subpath))
+    if tv_path.media_type != path.structure.MEDIA_TYPE_TV:
+        raise ValueError('No TV shows in non-TV show path')
+    for subpath in tv_path:
+        shows.append(TVShow(subpath))
     return shows

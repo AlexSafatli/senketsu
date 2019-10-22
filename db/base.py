@@ -5,6 +5,7 @@ import tvdb_api
 
 def scrape_media_library_in_db(driver, config):
     updated = []
+    # Formatted media
     for media_type in structure.get_media_library_types():
         table_name = structure.get_media_library_type_label(media_type)
         if table_name is not None:
@@ -22,4 +23,19 @@ def scrape_media_library_in_db(driver, config):
                     except tvdb_api.tvdb_shownotfound:
                         record['fields']['Scrapes To'] = ''
                     updated.append(conn.update(record['id'], record['fields']))
+    # Unformatted media
+    conn = driver.new_connection(config, 'Unformatted')
+    for record in conn.get_all():
+        fields = record['fields']
+        try:
+            scraper = scraping.scraper.get_scraper_for_media_type(
+                structure.get_media_library_type_from_label(fields['Type']))
+            if scraper is not None:
+                s = scraper[fields['Name']]
+                record['fields']['Scrapes To'] = s['seriesname']
+                record['fields']['Rating'] = float(s['siteRating']) if \
+                    s['siteRating'] else 0.0
+        except tvdb_api.tvdb_shownotfound:
+            record['fields']['Scrapes To'] = ''
+        updated.append(conn.update(record['id'], record['fields']))
     return len(updated)
