@@ -1,9 +1,11 @@
 # senketsu
-Kodi/XBMC Media Library Management and Monitoring
+[Airtable](https://airtable.com)-powered [Plex](https://plex.tv)/[Kodi](https://kodi.tv/)/XBMC Media Library Management and Monitoring using a command line interface (CLI).
 
-## Current Features
+## Current CLI Commands
 
-- Airtable integration (catalogues a media library under different tables in a single base)
+- Airtable `database`
+  - `sync`: mirror all Airtable records with media library file metadata
+  - `scrape`: attaches metadata from database websites to the Airtable records
 
 ## Planned Features
 
@@ -16,7 +18,8 @@ Kodi/XBMC Media Library Management and Monitoring
   - Save to AirTable
   - Save locally
 
-### Watchlist APIs
+### External APIs
 
+ - TVDB
  - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy)
  - MyDramaList - none - need to scrape HTML
