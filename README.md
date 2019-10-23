@@ -1,5 +1,6 @@
 # senketsu
-[Airtable](https://airtable.com)-powered [Plex](https://plex.tv)/[Kodi](https://kodi.tv/)/XBMC Media Library Management and Monitoring using a command line interface (CLI).
+
+[Airtable](https://airtable.com)-powered [Plex](https://plex.tv)/[Kodi](https://kodi.tv/)/XBMC Media Library Management and Monitoring using a command line interface (CLI) written in [Go](http://golang.org) and built for simplicity and home server use.
 
 ## Current CLI Commands
 
@@ -28,5 +29,5 @@
 ### External APIs
 
  - TVDB
- - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy)
+ - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy), [Jikan-go](https://github.com/darenliang/jikan-go)
  - MyDramaList - none - need to scrape HTML or produce own library
