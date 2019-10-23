@@ -7,6 +7,13 @@
   - `sync`: mirror all Airtable records with media library file metadata
   - `scrape`: attaches metadata from database websites to the Airtable records
 
+## Planned Optimizations
+
+- Speed up sync operation (very slow now; constrained by internal scraping)
+  - Parallel scraping operations using a worker pool?
+  - Profile operation to get more details
+- Consider rewrite in another language (project still immature)
+
 ## Planned Features
 
 - Local storage of findings
@@ -22,4 +29,4 @@
 
  - TVDB
  - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy)
- - MyDramaList - none - need to scrape HTML
+ - MyDramaList - none - need to scrape HTML or produce own library

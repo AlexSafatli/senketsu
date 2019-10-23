@@ -11,12 +11,12 @@ LABEL_TV_SEASON = 'Season'
 class TVShow(MediaLocation):
     def __init__(self, tvpath):
         super().__init__(tvpath, path.structure.MEDIA_TYPE_TV)
+        self.seasons = []
+        self.other_files = []
         self.__populate()
         self.__scrape()
 
     def __populate(self):
-        self.seasons = list()
-        self.other_files = list()
         for fi in self:
             name = helpers.get_file_name_parts(fi)[0]
             if os.path.isdir(fi) and LABEL_TV_SEASON in name:
@@ -56,7 +56,7 @@ class TVShowSeason(MediaLocation):
     def __init__(self, parent, spath):
         super().__init__(spath, path.structure.MEDIA_TYPE_CHILD)
         self.parent = parent
-        self.episodes = list()
+        self.episodes = []
         self.__populate()
 
     def __len__(self):

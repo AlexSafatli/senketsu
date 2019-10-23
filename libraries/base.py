@@ -5,7 +5,7 @@ import path.structure
 import libraries
 
 
-__clean_name_regex = r'[^a-zA-Z0-9()\- ]'
+__clean_name_regex = r'[^a-zA-Z0-9()\-\' ]'
 
 CLEAN_NAME_REGEX = re.compile(__clean_name_regex)
 
@@ -13,12 +13,11 @@ CLEAN_NAME_REGEX = re.compile(__clean_name_regex)
 class MediaLibrary(object):
     def __init__(self, root_path):
         self.root_path = root_path
-        self.__library_paths = list()
-        self.tv_shows = list()
-        self.movies = list()
-        self.anime = list()
-        self.dramas = list()
-        self.unformatted = list()
+        self.tv_shows = []
+        self.movies = []
+        self.anime = []
+        self.dramas = []
+        self.unformatted = []
         self.__library_paths = path.structure.get_media_library_paths(root_path)
         self.__populate()
 
