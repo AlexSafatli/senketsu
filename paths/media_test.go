@@ -74,6 +74,9 @@ func TestWalkRootDirectory(t *testing.T) {
 		t.Errorf("%s %d != Media Type Anime (%d)",
 			paths[0].Name, paths[0].MediaType, MediaTypeAnime)
 	}
+	if paths[0].NumberSeasons != 1 && paths[0].NumberEpisodes != 1 {
+		t.Errorf("%+v did not contain the right numbers", paths[0])
+	}
 	if paths[1].Name != "Avatar" {
 		t.Errorf("%s != %s", paths[1].Name, "Avatar")
 	}
@@ -87,5 +90,8 @@ func TestWalkRootDirectory(t *testing.T) {
 	if paths[2].MediaType != MediaTypeTV {
 		t.Errorf("%s %d != Media Type TV (%d)",
 			paths[2].Name, paths[2].MediaType, MediaTypeTV)
+	}
+	if paths[2].NumberSeasons != 1 && paths[2].NumberEpisodes != 1 {
+		t.Errorf("%+v did not contain the right numbers", paths[2])
 	}
 }

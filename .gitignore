@@ -14,8 +14,8 @@
 # Dependency directories (remove the comment below to include it)
 vendor
 
-# Python leftovers
-__pycache__
+# Final binary if go build was run
+senketsu
 
 # IDEA
 .idea

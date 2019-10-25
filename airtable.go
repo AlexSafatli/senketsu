@@ -1,4 +1,4 @@
-package senketsu
+package main
 
 import (
 	"./paths"
@@ -34,6 +34,58 @@ func GetMediaLocations(tableName string, client *airtable.Client) []paths.MediaL
 
 func CreateMediaLocation(location paths.MediaLocation, tableName string, client *airtable.Client) (string, error) {
 	record := airtableMediaLocation{Fields: location}
+	var existingRecords []airtableMediaLocation
+	if err := client.ListRecords(tableName, &existingRecords); err != nil {
+		return "", err
+	}
+	for _, record := range existingRecords {
+		if record.Fields.Name == location.Name {
+			return UpdateMediaLocation(location, record.AirtableID, tableName, client)
+		}
+	}
 	err := client.CreateRecord(tableName, &record)
 	return record.AirtableID, err
+}
+
+func UpdateMediaLocation(location paths.MediaLocation, id, tableName string, client *airtable.Client) (string, error) {
+	record := airtableMediaLocation{}
+	err := client.UpdateRecord(tableName, id, map[string]interface{}{
+		"Media Type":         location.MediaType,
+		"Source Path":        location.RootPath,
+		"Size":               location.Size,
+		"Number of Episodes": location.NumberEpisodes,
+		"Number of Seasons":  location.NumberSeasons,
+	}, &record)
+	return id, err
+}
+
+func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, client *airtable.Client) error {
+	var existingRecords []airtableMediaLocation
+	var existingIndex map[string]string
+	existingIndex = make(map[string]string)
+	if err := client.ListRecords(tableName, &existingRecords); err != nil {
+		return err
+	}
+	for _, record := range existingRecords {
+		existingIndex[record.Fields.Name] = record.AirtableID
+	}
+	for _, loc := range locations {
+		id, ok := existingIndex[loc.Name]
+		if !ok {
+			_, _ = CreateMediaLocation(loc, tableName, client)
+		} else {
+			_, _ = UpdateMediaLocation(loc, id, tableName, client)
+			existingIndex[loc.Name] = ""
+		}
+	}
+	for _, id := range existingIndex {
+		if id != "" {
+			_ = DeleteMediaLocation(id, tableName, client)
+		}
+	}
+	return nil
+}
+
+func DeleteMediaLocation(id, tableName string, client *airtable.Client) error {
+	return client.DestroyRecord(tableName, id)
 }

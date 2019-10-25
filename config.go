@@ -1,4 +1,4 @@
-package senketsu
+package main
 
 import "github.com/evalphobia/go-config-loader"
 
