@@ -60,7 +60,13 @@ func TestWalkRootDirectory(t *testing.T) {
 			os.TempDir(), len(paths), paths)
 		return
 	}
-	if paths[0].RootPath != filepath.Base(tmpA) {
-		t.Errorf("%s != %s", paths[0].RootPath, filepath.Base(tmpA))
+	if paths[0].Name != "Oh My Goddess" {
+		t.Errorf("%s != %s", paths[0].Name, "Oh My Goddess")
+	}
+	if paths[1].Name != "Avatar" {
+		t.Errorf("%s != %s", paths[1].Name, "Avatar")
+	}
+	if paths[2].Name != "Oh My Ghost" {
+		t.Errorf("%s != %s", paths[2].Name, "Oh My Ghost")
 	}
 }

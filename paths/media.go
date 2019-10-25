@@ -55,7 +55,7 @@ func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
 		var parent = filepath.Dir(path)
 		if info.IsDir() && root != parent {
 			var loc = MediaLocation{
-				Name:      info.Name(),
+				Name:      strings.ReplaceAll(info.Name(), "\\ ", " "),
 				RootPath:  path,
 				MediaType: GetMediaType(parent),
 				Size:      uint(info.Size()),
