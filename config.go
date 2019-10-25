@@ -4,7 +4,7 @@ import "github.com/evalphobia/go-config-loader"
 
 const (
 	confType      = "toml"
-	basePath      = "config"
+	basePath      = "."
 	apiKey        = "database.api_key"
 	mediaBase     = "media.base_id"
 	tvTable       = "media.tv_table_name"

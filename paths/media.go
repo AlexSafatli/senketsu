@@ -45,17 +45,18 @@ func GetMediaType(path string) uint8 {
 	return MediaTypeUnk
 }
 
-func WalkRootDirectory(path string) (err error, paths []MediaLocation) {
-	err = filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
+	err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
-		} else if info.Name() == path {
+		} else if path == root {
 			return nil
 		}
-		var parent = filepath.Dir(info.Name())
-		if info.IsDir() && parent != path {
+		var parent = filepath.Dir(path)
+		if info.IsDir() && root != parent {
 			var loc = MediaLocation{
-				RootPath:  info.Name(),
+				Name:      info.Name(),
+				RootPath:  path,
 				MediaType: GetMediaType(parent),
 				Size:      uint(info.Size()),
 			}
@@ -63,7 +64,7 @@ func WalkRootDirectory(path string) (err error, paths []MediaLocation) {
 			//	return nil
 			//}
 			paths = append(paths, loc)
-		} else if parent == path {
+		} else if root == parent {
 			return nil
 		}
 		return filepath.SkipDir
