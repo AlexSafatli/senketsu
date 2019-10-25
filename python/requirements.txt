@@ -1,4 +1,0 @@
-click
-filetype
-airtable-python-wrapper
-tvdb_api
