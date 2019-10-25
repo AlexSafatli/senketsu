@@ -23,12 +23,12 @@ const (
 )
 
 type MediaLocation struct {
-	MediaType      uint8  `json:"Media Type"`
-	RootPath       string `json:"Source Path"`
-	Name           string `json:"Name"`
-	Size           uint   `json:"Size"`
-	NumberSeasons  uint   `json:"Number of Seasons"`
-	NumberEpisodes uint   `json:"Number of Episodes"`
+	MediaType      uint8   `json:"Media Type"`
+	RootPath       string  `json:"Source Path"`
+	Name           string  `json:"Name"`
+	Size           float64 `json:"Size"`
+	NumberSeasons  uint    `json:"Number of Seasons"`
+	NumberEpisodes uint    `json:"Number of Episodes"`
 	MediaFiles     []string
 }
 
@@ -80,7 +80,7 @@ func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
 				Name:      strings.ReplaceAll(info.Name(), "\\ ", " "),
 				RootPath:  path,
 				MediaType: GetMediaType(parent),
-				Size:      uint(info.Size()),
+				Size:      float64(info.Size()) / 1e9,
 			}
 			if err := WalkLocationDirectory(&loc); err != nil {
 				return nil
