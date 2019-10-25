@@ -32,7 +32,7 @@ type MediaLocation struct {
 }
 
 func GetMediaType(path string) uint8 {
-	var baseName = filepath.Base(path)
+	var baseName = strings.ReplaceAll(filepath.Base(path), "\\ ", " ")
 	if strings.Contains(baseName, MediaLabelTV) {
 		return MediaTypeTV
 	} else if strings.Contains(baseName, MediaLabelMovie) {
