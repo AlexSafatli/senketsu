@@ -15,10 +15,11 @@ const (
 )
 
 const (
-	MediaLabelTV         = "TV Series"
-	MediaLabelMovie      = "Movies"
-	MediaLabelAnime      = "Anime"
-	MediaLabelAsianDrama = "Dramas"
+	MediaLabelTV           = "TV Series"
+	MediaLabelMovie        = "Movies"
+	MediaLabelAnime        = "Anime"
+	MediaLabelAsianDrama   = "Dramas"
+	MediaUnformattedMarker = "Unformatted"
 )
 
 type MediaLocation struct {
@@ -32,14 +33,18 @@ type MediaLocation struct {
 }
 
 type MediaLocationsSplit struct {
-	TV     []MediaLocation
-	Movies []MediaLocation
-	Anime  []MediaLocation
-	Dramas []MediaLocation
+	TV          []MediaLocation
+	Movies      []MediaLocation
+	Anime       []MediaLocation
+	Dramas      []MediaLocation
+	Unformatted []MediaLocation
+}
+
+func (l *MediaLocation) ParentDirName() string {
+	return filepath.Dir(l.RootPath)
 }
 
 func GetMediaType(path string) uint8 {
-
 	var baseName = strings.ReplaceAll(filepath.Base(path), "\\ ", " ")
 	if strings.Contains(baseName, MediaLabelTV) {
 		return MediaTypeTV
@@ -117,8 +122,12 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 }
 
 func SplitIntoMediaTypes(locations []MediaLocation) MediaLocationsSplit {
-	var tv, movie, anime, drama []MediaLocation
+	var tv, movie, anime, drama, unf []MediaLocation
 	for i := range locations {
+		if strings.Contains(locations[i].ParentDirName(), MediaUnformattedMarker) {
+			unf = append(unf, locations[i])
+			continue
+		}
 		switch locations[i].MediaType {
 		case MediaTypeTV:
 			tv = append(tv, locations[i])
@@ -134,5 +143,5 @@ func SplitIntoMediaTypes(locations []MediaLocation) MediaLocationsSplit {
 			break
 		}
 	}
-	return MediaLocationsSplit{tv, movie, anime, drama}
+	return MediaLocationsSplit{tv, movie, anime, drama, unf}
 }

@@ -49,5 +49,8 @@ func main() {
 		if err = MirrorMediaLocations(split.Dramas, conf.MediaTables.Drama, conn); err != nil {
 			panic(err)
 		}
+		if err = MirrorMediaLocations(split.Unformatted, conf.MediaTables.Unformatted, conn); err != nil {
+			panic(err)
+		}
 	}
 }
