@@ -70,9 +70,7 @@ func IsVideoFile(basename string) bool {
 func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
 	var cleanRoot = filepath.Clean(root)
 	err = filepath.Walk(cleanRoot, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		} else if path == cleanRoot {
+		if err != nil || path == cleanRoot {
 			return nil
 		}
 		if info.IsDir() && cleanRoot != filepath.Dir(path) {
@@ -98,9 +96,7 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 	var seasonCount uint = 0
 	var episodeCount uint = 0
 	err = filepath.Walk(loc.RootPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		} else if path == loc.RootPath {
+		if err != nil || path == loc.RootPath {
 			return nil
 		}
 		if loc.MediaType == MediaTypeTV ||
