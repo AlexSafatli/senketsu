@@ -4,6 +4,7 @@ import (
 	"./paths"
 	"fmt"
 	"github.com/fabioberger/airtable-go"
+	"os"
 )
 
 type airtableMediaLocation struct {
@@ -82,7 +83,7 @@ func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, cli
 			if err == nil {
 				writes++
 			} else {
-				fmt.Println("Failed writing a record: ", err)
+				_, _ = fmt.Fprintln(os.Stderr, "Failed writing a record: ", err)
 			}
 		} else {
 			_, err = UpdateMediaLocation(loc, id, tableName, client)
