@@ -27,6 +27,7 @@ type MediaLocation struct {
 	RootPath       string   `json:"Path"`
 	Name           string   `json:"Name"`
 	Size           float64  `json:"Size"`
+	ScrapeName     string   `json:"Scrapes To,omitempty"`
 	NumberSeasons  uint     `json:"Number of Seasons,omitempty"`
 	NumberEpisodes uint     `json:"Number of Episodes,omitempty"`
 	MediaFiles     []string `json:"-"`
@@ -96,8 +97,8 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 	var seasonCount uint = 0
 	var episodeCount uint = 0
 	err = filepath.Walk(loc.RootPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil || path == loc.RootPath {
-			return nil
+		if err != nil || path == loc.RootPath || strings.HasPrefix(info.Name(), ".") {
+			return nil // ignore hidden files, etc.
 		}
 		if loc.MediaType == MediaTypeTV ||
 			loc.MediaType == MediaTypeAnime ||
