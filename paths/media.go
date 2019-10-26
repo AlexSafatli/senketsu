@@ -27,8 +27,8 @@ type MediaLocation struct {
 	RootPath       string   `json:"Path"`
 	Name           string   `json:"Name"`
 	Size           float64  `json:"Size"`
-	NumberSeasons  uint     `json:"Number of Seasons"`
-	NumberEpisodes uint     `json:"Number of Episodes"`
+	NumberSeasons  uint     `json:"Number of Seasons,omitempty"`
+	NumberEpisodes uint     `json:"Number of Episodes,omitempty"`
 	MediaFiles     []string `json:"-"`
 }
 
