@@ -79,7 +79,6 @@ func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
 				Name:      strings.ReplaceAll(info.Name(), "\\ ", " "),
 				RootPath:  path,
 				MediaType: GetMediaType(filepath.Dir(path)),
-				Size:      float64(info.Size()) / 1e9,
 			}
 			if err := WalkLocationDirectory(&loc); err != nil {
 				return nil
@@ -108,10 +107,15 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 			} else if !info.IsDir() &&
 				strings.Contains(filepath.Dir(path), "Season") &&
 				IsVideoFile(info.Name()) {
+				loc.Size += float64(info.Size()) / 1e9
 				episodeCount++
 			}
+		} else if loc.MediaType == MediaTypeMovie {
+			if !info.IsDir() {
+				loc.Size += float64(info.Size()) / 1e9
+			}
 		}
-		return filepath.SkipDir
+		return nil
 	})
 	loc.NumberEpisodes = episodeCount
 	loc.NumberSeasons = seasonCount
