@@ -23,13 +23,13 @@ const (
 )
 
 type MediaLocation struct {
-	MediaType      uint8
-	RootPath       string  `json:"Path"`
-	Name           string  `json:"Name"`
-	Size           float64 `json:"Size"`
-	NumberSeasons  uint    `json:"Number of Seasons"`
-	NumberEpisodes uint    `json:"Number of Episodes"`
-	MediaFiles     []string
+	MediaType      uint8    `json:"-"`
+	RootPath       string   `json:"Path"`
+	Name           string   `json:"Name"`
+	Size           float64  `json:"Size"`
+	NumberSeasons  uint     `json:"Number of Seasons"`
+	NumberEpisodes uint     `json:"Number of Episodes"`
+	MediaFiles     []string `json:"-"`
 }
 
 type MediaLocationsSplit struct {

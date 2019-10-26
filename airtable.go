@@ -52,8 +52,7 @@ func CreateMediaLocation(location paths.MediaLocation, tableName string, client 
 func UpdateMediaLocation(location paths.MediaLocation, id, tableName string, client *airtable.Client) (string, error) {
 	record := airtableMediaLocation{}
 	err := client.UpdateRecord(tableName, id, map[string]interface{}{
-		"Media Type":         location.MediaType,
-		"Source Path":        location.RootPath,
+		"Path":               location.RootPath,
 		"Size":               location.Size,
 		"Number of Episodes": location.NumberEpisodes,
 		"Number of Seasons":  location.NumberSeasons,
