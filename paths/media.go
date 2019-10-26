@@ -104,16 +104,12 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 			loc.MediaType == MediaTypeAsianDrama {
 			if info.IsDir() && strings.Contains(info.Name(), "Season") {
 				seasonCount++
-			} else if !info.IsDir() &&
-				strings.Contains(filepath.Dir(path), "Season") &&
-				IsVideoFile(info.Name()) {
-				loc.Size += float64(info.Size()) / 1e9
+			} else if !info.IsDir() && IsVideoFile(info.Name()) {
 				episodeCount++
 			}
-		} else if loc.MediaType == MediaTypeMovie {
-			if !info.IsDir() {
-				loc.Size += float64(info.Size()) / 1e9
-			}
+		}
+		if !info.IsDir() {
+			loc.Size += float64(info.Size()) / 1e9
 		}
 		return nil
 	})
