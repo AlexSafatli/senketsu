@@ -32,25 +32,47 @@ func main() {
 		os.Exit(1)
 	}
 	if cmd == "scan" {
+		// Do scan
 		err, scanned := paths.WalkRootDirectory(root)
 		if err != nil {
 			panic(err)
 		}
+		fmt.Printf("Scanned %d items: ", len(scanned))
 		split := paths.SplitIntoMediaTypes(scanned)
-		if err = MirrorMediaLocations(split.TV, conf.MediaTables.TV, conn); err != nil {
+		fmt.Printf("%d TV Series, %d Movies, %d Anime Shows, %d Dramas and %d unformatted items\n",
+			len(split.TV), len(split.Movies), len(split.Anime), len(split.Dramas),
+			len(split.Unformatted))
+
+		// Update AirTable
+		w, u, d, err := MirrorMediaLocations(split.TV, conf.MediaTables.TV, conn)
+		if err != nil {
 			panic(err)
 		}
-		if err = MirrorMediaLocations(split.Movies, conf.MediaTables.Movie, conn); err != nil {
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+			w, u, d, conf.MediaTables.TV)
+		w, u, d, err = MirrorMediaLocations(split.Movies, conf.MediaTables.Movie, conn)
+		if err != nil {
 			panic(err)
 		}
-		if err = MirrorMediaLocations(split.Anime, conf.MediaTables.Anime, conn); err != nil {
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+			w, u, d, conf.MediaTables.Movie)
+		w, u, d, err = MirrorMediaLocations(split.Anime, conf.MediaTables.Anime, conn)
+		if err != nil {
 			panic(err)
 		}
-		if err = MirrorMediaLocations(split.Dramas, conf.MediaTables.Drama, conn); err != nil {
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+			w, u, d, conf.MediaTables.Anime)
+		w, u, d, err = MirrorMediaLocations(split.Dramas, conf.MediaTables.Drama, conn)
+		if err != nil {
 			panic(err)
 		}
-		if err = MirrorMediaLocations(split.Unformatted, conf.MediaTables.Unformatted, conn); err != nil {
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+			w, u, d, conf.MediaTables.Drama)
+		w, u, d, err = MirrorMediaLocations(split.Unformatted, conf.MediaTables.Unformatted, conn)
+		if err != nil {
 			panic(err)
 		}
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+			w, u, d, conf.MediaTables.Unformatted)
 	}
 }

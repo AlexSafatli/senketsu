@@ -23,8 +23,8 @@ const (
 )
 
 type MediaLocation struct {
-	MediaType      uint8   `json:"Media Type"`
-	RootPath       string  `json:"Source Path"`
+	MediaType      uint8   `json:"Type"`
+	RootPath       string  `json:"Path"`
 	Name           string  `json:"Name"`
 	Size           float64 `json:"Size"`
 	NumberSeasons  uint    `json:"Number of Seasons"`

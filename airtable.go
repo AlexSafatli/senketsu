@@ -59,12 +59,12 @@ func UpdateMediaLocation(location paths.MediaLocation, id, tableName string, cli
 	return id, err
 }
 
-func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, client *airtable.Client) error {
+func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, client *airtable.Client) (writes, updates, deletes uint, err error) {
 	var existingRecords []airtableMediaLocation
 	var existingIndex map[string]string
 	existingIndex = make(map[string]string)
 	if err := client.ListRecords(tableName, &existingRecords); err != nil {
-		return err
+		return
 	}
 	for _, record := range existingRecords {
 		existingIndex[record.Fields.Name] = record.AirtableID
@@ -72,18 +72,22 @@ func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, cli
 	for _, loc := range locations {
 		id, ok := existingIndex[loc.Name]
 		if !ok {
-			_, _ = CreateMediaLocation(loc, tableName, client)
+			record := airtableMediaLocation{Fields: loc}
+			_ = client.CreateRecord(tableName, &record)
+			writes++
 		} else {
 			_, _ = UpdateMediaLocation(loc, id, tableName, client)
-			existingIndex[loc.Name] = ""
+			updates++
 		}
+		existingIndex[loc.Name] = ""
 	}
 	for _, id := range existingIndex {
 		if id != "" {
 			_ = DeleteMediaLocation(id, tableName, client)
+			deletes++
 		}
 	}
-	return nil
+	return
 }
 
 func DeleteMediaLocation(id, tableName string, client *airtable.Client) error {
