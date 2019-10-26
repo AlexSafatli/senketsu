@@ -63,7 +63,7 @@ func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, cli
 	var existingRecords []airtableMediaLocation
 	var existingIndex map[string]string
 	existingIndex = make(map[string]string)
-	if err := client.ListRecords(tableName, &existingRecords); err != nil {
+	if err = client.ListRecords(tableName, &existingRecords); err != nil {
 		return
 	}
 	for _, record := range existingRecords {

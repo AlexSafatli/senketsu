@@ -9,7 +9,7 @@ import (
 func main() {
 	// Check if arg length correct
 	if len(os.Args) < 2 || len(os.Args) > 3 {
-		fmt.Printf("Usage of %s:\n <root_path> [sync/scrape]\n", os.Args[0])
+		fmt.Printf("Usage of %s:\n <root_path> [scan/scrape]\n", os.Args[0])
 		os.Exit(2)
 	}
 
@@ -38,6 +38,11 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("Scanned %d items: ", len(scanned))
+		if len(scanned) == 0 {
+			fmt.Print("Stopping.\n")
+			os.Exit(0)
+		}
+
 		split := paths.SplitIntoMediaTypes(scanned)
 		fmt.Printf("%d TV Series, %d Movies, %d Anime Shows, %d Dramas and %d unformatted items\n",
 			len(split.TV), len(split.Movies), len(split.Anime), len(split.Dramas),

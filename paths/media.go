@@ -68,25 +68,25 @@ func IsVideoFile(basename string) bool {
 }
 
 func WalkRootDirectory(root string) (err error, paths []MediaLocation) {
-	err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+	var cleanRoot = filepath.Clean(root)
+	err = filepath.Walk(cleanRoot, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
-		} else if path == root {
+		} else if path == cleanRoot {
 			return nil
 		}
-		var parent = filepath.Dir(path)
-		if info.IsDir() && root != parent {
+		if info.IsDir() && cleanRoot != filepath.Dir(path) {
 			var loc = MediaLocation{
 				Name:      strings.ReplaceAll(info.Name(), "\\ ", " "),
 				RootPath:  path,
-				MediaType: GetMediaType(parent),
+				MediaType: GetMediaType(filepath.Dir(path)),
 				Size:      float64(info.Size()) / 1e9,
 			}
 			if err := WalkLocationDirectory(&loc); err != nil {
 				return nil
 			}
 			paths = append(paths, loc)
-		} else if root == parent {
+		} else if cleanRoot == filepath.Dir(path) {
 			return nil
 		}
 		return filepath.SkipDir
