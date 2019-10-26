@@ -61,6 +61,9 @@ func GetMediaType(path string) uint8 {
 
 func IsVideoFile(basename string) bool {
 	var ext = filepath.Ext(basename)
+	if len(ext) > 0 {
+		ext = ext[1:] // trim the dot
+	}
 	return ext == "mkv" || ext == "webm" || ext == "flv" || ext == "vob" ||
 		ext == "ogv" || ext == "avi" || ext == "mts" || ext == "m2ts" ||
 		ext == "ts" || ext == "mov" || ext == "qt" || ext == "wmv" ||
@@ -99,18 +102,14 @@ func WalkLocationDirectory(loc *MediaLocation) (err error) {
 		if err != nil || path == loc.RootPath || strings.HasPrefix(info.Name(), ".") {
 			return nil // ignore hidden files, etc.
 		}
-		if loc.MediaType == MediaTypeTV ||
-			loc.MediaType == MediaTypeAnime ||
-			loc.MediaType == MediaTypeAsianDrama {
+		if loc.MediaType == MediaTypeTV || loc.MediaType == MediaTypeAnime || loc.MediaType == MediaTypeAsianDrama {
 			if info.IsDir() && strings.Contains(info.Name(), "Season") {
 				seasonCount++
 			} else if !info.IsDir() && IsVideoFile(info.Name()) {
 				episodeCount++
 			}
 		}
-		if !info.IsDir() {
-			loc.Size += float64(info.Size()) / 1e9
-		}
+		loc.Size += float64(info.Size()) / 1e9
 		return nil
 	})
 	loc.NumberEpisodes = episodeCount

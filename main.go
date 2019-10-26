@@ -44,7 +44,7 @@ func main() {
 		}
 
 		split := paths.SplitIntoMediaTypes(scanned)
-		fmt.Printf("%d TV Series, %d Movies, %d Anime Shows, %d Dramas and %d unformatted items\n",
+		fmt.Printf("%d TV, %d Movies, %d Anime, %d Dramas and %d Unformatted\n",
 			len(split.TV), len(split.Movies), len(split.Anime), len(split.Dramas),
 			len(split.Unformatted))
 
@@ -53,31 +53,31 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records -> %s\n",
 			w, u, d, conf.MediaTables.TV)
 		w, u, d, err = MirrorMediaLocations(split.Movies, conf.MediaTables.Movie, conn)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records -> %s\n",
 			w, u, d, conf.MediaTables.Movie)
 		w, u, d, err = MirrorMediaLocations(split.Anime, conf.MediaTables.Anime, conn)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records -> %s\n",
 			w, u, d, conf.MediaTables.Anime)
 		w, u, d, err = MirrorMediaLocations(split.Dramas, conf.MediaTables.Drama, conn)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records -> %s\n",
 			w, u, d, conf.MediaTables.Drama)
 		w, u, d, err = MirrorMediaLocations(split.Unformatted, conf.MediaTables.Unformatted, conn)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records from %s\n",
+		fmt.Printf("Wrote %d records, updated %d records, and deleted %d records -> %s\n",
 			w, u, d, conf.MediaTables.Unformatted)
 	}
 }
