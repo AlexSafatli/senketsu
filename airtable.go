@@ -2,6 +2,7 @@ package main
 
 import (
 	"./paths"
+	"fmt"
 	"github.com/fabioberger/airtable-go"
 )
 
@@ -60,6 +61,10 @@ func UpdateMediaLocation(location paths.MediaLocation, id, tableName string, cli
 }
 
 func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, client *airtable.Client) (writes, updates, deletes uint, err error) {
+	if len(locations) == 0 {
+		return
+	}
+
 	var existingRecords []airtableMediaLocation
 	var existingIndex map[string]string
 	existingIndex = make(map[string]string)
@@ -73,11 +78,17 @@ func MirrorMediaLocations(locations []paths.MediaLocation, tableName string, cli
 		id, ok := existingIndex[loc.Name]
 		if !ok {
 			record := airtableMediaLocation{Fields: loc}
-			_ = client.CreateRecord(tableName, &record)
-			writes++
+			err = client.CreateRecord(tableName, &record)
+			if err == nil {
+				writes++
+			} else {
+				fmt.Println("Failed writing a record: ", err)
+			}
 		} else {
-			_, _ = UpdateMediaLocation(loc, id, tableName, client)
-			updates++
+			_, err = UpdateMediaLocation(loc, id, tableName, client)
+			if err == nil {
+				updates++
+			}
 		}
 		existingIndex[loc.Name] = ""
 	}

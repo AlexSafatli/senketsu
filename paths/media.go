@@ -19,7 +19,7 @@ const (
 	MediaLabelMovie        = "Movies"
 	MediaLabelAnime        = "Anime"
 	MediaLabelAsianDrama   = "Dramas"
-	MediaUnformattedMarker = "Unformatted"
+	MediaUnformattedMarker = "Not Formatted"
 )
 
 type MediaLocation struct {
