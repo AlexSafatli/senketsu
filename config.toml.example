@@ -1,0 +1,13 @@
+[database]
+api_key = "airtable_key"
+
+[media]
+base_id = "airtable_base_id"
+tv_table_name = "TV Series"
+anime_table_name = "Anime"
+movie_table_name = "Movies"
+drama_table_name = "Dramas"
+unformatted_table_name = "Unformatted"
+
+[watchlist]
+base_id = "airtable_base_id"
