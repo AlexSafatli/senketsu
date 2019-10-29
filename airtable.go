@@ -11,6 +11,9 @@ type airtableMediaLocation struct {
 }
 
 func OpenConnection(apiKey, baseID string) (*airtable.Client, error) {
+	if len(apiKey) == 0 || len(baseID) == 0 {
+		panic("No Airtable API key or Base ID provided.")
+	}
 	client, err := airtable.New(apiKey, baseID)
 	if err != nil {
 		return nil, err
