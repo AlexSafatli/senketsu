@@ -1,6 +1,10 @@
 package main
 
-import "github.com/evalphobia/go-config-loader"
+import (
+	"fmt"
+	"github.com/evalphobia/go-config-loader"
+	"os"
+)
 
 const (
 	confType         = "toml"
@@ -32,6 +36,8 @@ func loadConfigs() configValues {
 	var conf *config.Config
 	conf = config.NewConfig()
 	if err := conf.LoadConfigs(basePath, confType); err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "No %s config file in directory '%s'\n",
+			confType, basePath)
 		panic(err)
 	}
 	return configValues{
