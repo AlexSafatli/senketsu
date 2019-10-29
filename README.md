@@ -4,21 +4,12 @@
 
 ## Current CLI Commands
 
-- Airtable `database`
-  - `sync`: mirror all Airtable records with media library file metadata
-  - `scrape`: attaches metadata from database websites to the Airtable records
-
-## Planned Optimizations
-
-- Speed up sync operation (very slow now; constrained by internal scraping)
-  - Parallel scraping operations using a worker pool?
-  - Profile operation to get more details
-- Consider rewrite in another language (project still immature)
+- `sync`: mirror all Airtable records with media library file metadata
 
 ## Planned Features
 
-- Local storage of findings
-- Complex renaming
+- (Possible) local storage of findings using [scribble](https://github.com/nanobox-io/golang-scribble)
+- Complex renaming using pattern recognition and empirical rules for anime (look for similar projects; see what is necessary for XBMC vs. Plex)
 - Quality recognition
 - Manage a watch list (akin to [MyAnimeList](http://myanimelist.net)'s) for all of TV Shows, Movies, Asian Dramas, Anime, ....
   - Sync to MyAnimeList for Anime
@@ -29,5 +20,5 @@
 ### External APIs
 
  - TVDB
- - MyAnimeList - [JikanPy](https://github.com/AWConant/jikanpy), [Jikan-go](https://github.com/darenliang/jikan-go)
+ - MyAnimeList - [Jikan-go](https://github.com/darenliang/jikan-go)
  - MyDramaList - none - need to scrape HTML or produce own library
