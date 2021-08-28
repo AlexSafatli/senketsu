@@ -15,6 +15,7 @@
 
 - (Possible) local storage of findings using [scribble](https://github.com/nanobox-io/golang-scribble)
 - Quality recognition
+- Sonarr/Radarr integration
 - Manage a watch list (akin to [MyAnimeList](http://myanimelist.net)'s) for all of TV Shows, Movies, Asian Dramas, Anime, ....
   - Sync to MyAnimeList for Anime
   - Sync to MyDramaList for Asian Dramas
