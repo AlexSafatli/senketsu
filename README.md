@@ -1,6 +1,10 @@
 # senketsu
 
-[Airtable](https://airtable.com)-powered [Plex](https://plex.tv)/[Kodi](https://kodi.tv/)/XBMC Media Library Management and Monitoring using a command line interface (CLI) written in [Go](http://golang.org) and built for simplicity and home server use.
+[Airtable](https://airtable.com)-powered [Plex](https://plex.tv)/[Kodi](https://kodi.tv/)/XBMC Media Library Management and Monitoring using a command line interface (CLI) written in [Go](http://golang.org) and built for simplicity and home server use. Used personally alongside a Plex/Sonarr/Radarr stack. Assumes a partitoning of content in the form of:
+
+- *Dramas* (Asian Dramas including C-Dramas, J-Dramas, K-Dramas)
+- *Anime*
+- *TV Shows* (anything that is not either of the above two)
 
 ## Current CLI Commands
 
