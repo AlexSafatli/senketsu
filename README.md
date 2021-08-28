@@ -5,6 +5,7 @@
 - *Dramas* (Asian Dramas including C-Dramas, J-Dramas, K-Dramas)
 - *Anime*
 - *TV Shows* (anything that is not either of the above two)
+- *Movies* (comprising content from any region)
 
 ## Current CLI Commands
 
